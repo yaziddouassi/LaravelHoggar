@@ -1,0 +1,98 @@
+<template>
+    <div class="grid max-[700px]:grid-cols-1
+     grid-cols-2 p-[10px] gap-[10px]">
+        <div 
+         v-for="(item, index) in hoggarinput.hogarDataFields" :key="index">
+           <div>
+            <InputText v-if=" hoggarinput.hogarDataTypes[index] == 'Text'" :cle="index" />
+           </div>
+           <div>
+            <Password v-if=" hoggarinput.hogarDataTypes[index] == 'Password'" :cle="index" />
+           </div>
+           <div>
+            <InputRadio v-if=" hoggarinput.hogarDataTypes[index] == 'Radio'" :cle="index" />
+           </div>
+           <div>
+            <CheckBox v-if=" hoggarinput.hogarDataTypes[index] == 'CheckBox'" :cle="index" />
+           </div>
+           <div>
+            <CheckBoxMultiple v-if=" hoggarinput.hogarDataTypes[index] == 'CheckBoxMultiple'" :cle="index" />
+           </div>
+           <div>
+            <InputSelect v-if=" hoggarinput.hogarDataTypes[index] == 'Select'" :cle="index" />
+           </div>
+           <div>
+            <InputDate v-if=" hoggarinput.hogarDataTypes[index] == 'Date'" :cle="index" />
+           </div>
+           <div>
+            <InputNumber v-if=" hoggarinput.hogarDataTypes[index] == 'Number'" :cle="index" />
+           </div>
+           <div>
+            <Editeur v-if=" hoggarinput.hogarDataTypes[index] == 'Quill'" :cle="index"  />
+           </div>
+           <div>
+            <InputFile v-if=" hoggarinput.hogarDataTypes[index] == 'File'" :cle="index"  />
+           </div>
+
+           <div>
+            <InputImage v-if=" hoggarinput.hogarDataTypes[index] == 'Image'" :cle="index"  />
+           </div>
+
+           <div>
+            <InputVideo v-if=" hoggarinput.hogarDataTypes[index] == 'Video'" :cle="index"  />
+           </div>
+
+           <div>
+            <InputAudio v-if=" hoggarinput.hogarDataTypes[index] == 'Audio'" :cle="index"  />
+           </div>
+
+           <div>
+            <MultipleFile v-if=" hoggarinput.hogarDataTypes[index] == 'MultipleFile'" :cle="index"  />
+           </div>
+
+           <div>
+            <MultipleAudio v-if=" hoggarinput.hogarDataTypes[index] == 'MultipleAudio'" :cle="index"  />
+           </div>
+
+           <div>
+            <MultipleImage v-if=" hoggarinput.hogarDataTypes[index] == 'MultipleImage'" :cle="index"  />
+           </div>
+
+           <div>
+            <MultipleVideo v-if=" hoggarinput.hogarDataTypes[index] == 'MultipleVideo'" :cle="index"  />
+           </div>
+
+
+
+        </div>
+    </div>
+</template>
+
+<script setup>
+import InputText from '../Inputs/InputText.vue';
+import InputSelect from '../Inputs/InputSelect.vue';
+import Password from '../Inputs/Password.vue';
+import InputRadio from '../Inputs/InputRadio.vue';
+import InputDate from '../Inputs/InputDate.vue';
+import InputNumber from '../Inputs/InputNumber.vue';
+import CheckBox from '../Inputs/CheckBox.vue';
+import CheckBoxMultiple from '../Inputs/CheckBoxMultiple.vue';
+import Editeur from '../Inputs/Editeur.vue';
+import InputFile from '../Inputs/InputFile.vue';
+import InputImage from '../Inputs/InputImage.vue';
+import InputVideo from '../Inputs/InputVideo.vue';
+import InputAudio from '../Inputs/InputAudio.vue';
+import MultipleFile from '../Inputs/MultipleFile.vue';
+import MultipleAudio from '../Inputs/MultipleAudio.vue';
+import MultipleImage from '../Inputs/MultipleImage.vue';
+import MultipleVideo from '../Inputs/MultipleVideo.vue';
+import { HoggarInput } from '@/HoggarLibs/stores/hoggarinput';
+
+const hoggarinput = HoggarInput();
+  
+
+</script>
+
+<style lang="css" scoped>
+
+</style>

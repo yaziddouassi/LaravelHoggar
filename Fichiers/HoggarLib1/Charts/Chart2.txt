@@ -1,0 +1,78 @@
+<template>
+    <div>
+         <div>
+                <Bar
+                id="my-chart-id"
+                :options="chartOptions"
+               :data="chartData"
+             />
+          </div>
+
+          <div class="text-center">
+            <button @click="changer()">Update</button>
+          </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import { router } from '@inertiajs/vue3'
+  import { ref } from 'vue'
+  import { Bar } from 'vue-chartjs'
+  import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    BarElement,
+    CategoryScale,
+    LinearScale
+  } from 'chart.js'
+  
+
+  const props = defineProps({
+  Myprops: {
+    type: Object,
+    required: true
+  },
+  Namechart: {
+    type: String,
+    required: true
+  },
+
+});
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+  
+  // Define chart data with custom colors
+  const chartData = ref({
+    labels: props.Myprops.labels,
+    datasets: [
+      {
+        label: 'Sales',
+        data: props.Myprops.datas,
+        backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726'], // Blue, Green, Orange
+        borderRadius: 8
+      }
+    ]
+  })
+  
+  // Chart options
+  const chartOptions = ref({
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true
+      }
+    }
+  })
+
+
+function changer() {
+  
+    router.visit('/admin',  { only: [props.Namechart] } ,{preserveState: false,})
+}
+
+
+  // Register necessary chart components
+  
+  </script>

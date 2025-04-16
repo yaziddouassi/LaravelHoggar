@@ -1,0 +1,83 @@
+<template>
+  <div class="space-y-2">
+    <!-- Label -->
+    <div>
+      <span class="font-bold">{{ hoggarinput.hogarDataLabels[props.cle] }}</span>
+    </div>
+
+    <!-- Éditeur Quill -->
+    <div class="bg-white h-[300px] border border-gray-300 rounded-ls shadow-sm p-2">
+      <div ref="editorContainer" class="min-h-[180px]"></div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div v-if="hoggarinput.errors[cle]" class="text-red-500 text-sm">
+      {{ hoggarinput.errors[cle] }}
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, watch } from "vue";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
+import { HoggarInput } from "@/HoggarLibs/stores/hoggarinput";
+
+const props = defineProps({
+  cle: {
+    type: String,
+    required: true,
+  },
+});
+
+const hoggarinput = HoggarInput();
+const editorContainer = ref(null);
+const content = ref(hoggarinput.hogarDataValues[props.cle]);
+let quill = null;
+
+// Options de Quill
+const quillOptions = {
+  theme: "snow",
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+      ["clean"],
+    ],
+  },
+};
+
+onMounted(() => {
+  quill = new Quill(editorContainer.value, quillOptions);
+  quill.root.innerHTML = hoggarinput.hogarDataValues[props.cle] || "";
+
+  quill.on("text-change", () => {
+    content.value = quill.root.innerHTML.trim() === "<p><br></p>" ? "" : quill.root.innerHTML;
+    hoggarinput.hogarDataValues[props.cle] = content.value;
+  });
+});
+
+// Synchronisation des mises à jour externes
+watch(
+  () => hoggarinput.hogarDataValues[props.cle],
+  (newValue) => {
+    if (quill && newValue !== quill.root.innerHTML) {
+      content.value = newValue;
+      quill.clipboard.dangerouslyPasteHTML(newValue);
+    }
+  }
+);
+</script>
+
+<style scoped>
+/* Suppression de la bordure par défaut de Quill */
+::v-deep(.ql-container) {
+  border: none !important;
+}
+
+::v-deep(.ql-toolbar) {
+  border: none !important;
+}
+</style>
