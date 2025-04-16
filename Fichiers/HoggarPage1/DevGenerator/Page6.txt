@@ -1,78 +1,175 @@
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-black text-white p-[10px]">
-      <div class="w-full max-w-md rounded-xl shadow-lg p-8 max-w-[400px]">
-        <div class="text-3xl font-bold mb-6 text-center bg-[#111] p-[10px] text-white">
-          {{ props.company }}
-        </div>
-  
-        <form @submit.prevent="submit">
-          <!-- Email -->
-          <div class="mb-4">
-            <label for="email" class="block text-sm font-medium mb-1">Email</label>
-            <input 
-              v-model="form.email"
-              type="email"
-              id="email"
-              class="w-full h-[46px] px-4 py-2 bg-black border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-white"
-              autocomplete="email"
-            />
-            <p v-if="form.errors.email" class="text-red-400 text-sm mt-1">{{ form.errors.email }}</p>
-          </div>
-  
-          <!-- Password -->
-          <div class="mb-6">
-            <label for="password" class="block text-sm font-medium mb-1">Mot de passe</label>
-            <div class="relative">
-              <input
-                v-model="form.password"
-                :type="showPassword ? 'text' : 'password'"
-                id="password"
-                class="w-full h-[46px] px-4 py-2 pr-10 bg-black border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-white"
-                autocomplete="current-password"
-              />
-              <!-- Material Icon Eye -->
-              <span
-                class="material-icons absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white cursor-pointer select-none"
-                @click="showPassword = !showPassword"
-              >
-                {{ showPassword ? 'visibility_off' : 'visibility' }}
-              </span>
-            </div>
-            <p v-if="form.errors.password" class="text-red-400 text-sm mt-1">{{ form.errors.password }}</p>
-          </div>
-  
-          <!-- Submit -->
-          <button
-            type="submit"
-            class="w-full h-[46px] py-2 px-4 bg-blue-600 text-white font-semibold rounded hover:bg-blue-500 transition"
-          >
-            Login
-          </button>
-        </form>
+  <div class="container">
+    <div class="card">
+      <div class="header">
+        {{ props.company }}
       </div>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue'
-  import { useForm } from '@inertiajs/vue3'
 
-  const props = defineProps({
-    company: {
-    type: String,
-    required: true
-  }, 
-  
-});
-  
-  const form = useForm({
-    email: '',
-    password: '',
-  })
-  
-  const showPassword = ref(false)
-  
-  function submit() {
-    form.post('/admin/login')
-  }
-  </script>
+      <form @submit.prevent="submit">
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            v-model="form.email"
+            type="email"
+            id="email"
+            class="input"
+            autocomplete="email"
+          />
+          <p v-if="form.errors.email" class="error">{{ form.errors.email }}</p>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <div class="input-wrapper">
+            <input
+              v-model="form.password"
+              :type="showPassword ? 'text' : 'password'"
+              id="password"
+              class="input"
+              autocomplete="current-password"/>
+<span
+  class="material-icons toggle-password"
+  @click="showPassword = !showPassword"
+>
+  {{ showPassword ? 'visibility_off' : 'visibility' }}
+</span>
+</div>
+<p v-if="form.errors.password" class="error">{{ form.errors.password }}</p>
+</div>
+
+<!-- Submit -->
+<button type="submit" class="btn-submit">
+Login
+</button>
+</form>
+</div>
+</div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useForm } from '@inertiajs/vue3'
+
+const props = defineProps({
+company: {
+type: String,
+required: true
+}
+})
+
+const form = useForm({
+email: '',
+password: '',
+})
+
+const showPassword = ref(false)
+
+function submit() {
+form.post('/admin/login')
+}
+</script>
+
+<style>
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+}
+
+.container {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #000;
+color: white;
+padding: 10px;
+}
+
+.card {
+width: 100%;
+max-width: 400px;
+background-color: #111;
+border-radius: 12px;
+padding: 32px;
+box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.header {
+font-size: 24px;
+font-weight: bold;
+text-align: center;
+margin-bottom: 24px;
+padding: 10px;
+background-color: #111;
+color: white;
+}
+
+.form-group {
+margin-bottom: 20px;
+}
+
+.form-group label {
+display: block;
+font-size: 14px;
+margin-bottom: 6px;
+}
+
+.input {
+width: 100%;
+height: 46px;
+padding: 0 14px;
+background-color: #000;
+border: 1px solid #555;
+border-radius: 6px;
+color: white;
+outline: none;
+box-sizing: border-box;
+}
+
+.input:focus {
+border-color: white;
+box-shadow: 0 0 0 2px white;
+}
+
+.input-wrapper {
+position: relative;
+}
+
+.toggle-password {
+position: absolute;
+right: 12px;
+top: 50%;
+transform: translateY(-50%);
+cursor: pointer;
+color: #aaa;
+user-select: none;
+}
+
+.toggle-password:hover {
+color: white;
+}
+
+.error {
+color: #f87171;
+font-size: 13px;
+margin-top: 6px;
+}
+
+.btn-submit {
+width: 100%;
+height: 46px;
+background-color: #2563eb;
+color: white;
+font-weight: bold;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+background-color: #3b82f6;
+}
+</style>
