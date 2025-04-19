@@ -81,7 +81,7 @@
       <div class="pl-[3px]  text-[18px] flex">
          <div class="pt-[3px]" >
             <span class="material-icons text-[18px] text-[white]" @click="logout()">
-               power_off
+               settings_power
                </span>
              
          </div>

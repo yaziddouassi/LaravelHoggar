@@ -19,10 +19,10 @@
       <button class="bg-[blue] border border-white w-[80px] rounded-[3px] p-[7px] text-[20px]">
          CRUD
       </button></a>&nbsp;
-      <a href="/admin/chart-generator" wire:navigate >
+      <a href="/admin/wizard-generator" wire:navigate >
       <button class="border border-white  w-[90px] rounded-[3px] p-[7px] text-[20px]">
            <span>
-            CHARTS
+            Wizard
          </span>  
       </button> 
      </a>
